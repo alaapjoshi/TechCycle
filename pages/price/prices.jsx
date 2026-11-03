@@ -14,46 +14,24 @@ export default function Prices() {
   const [userInput, setUserInput] = useState('');
   const [estimatedValue, setEstimatedValue] = useState('');
 
-  // Constants for api
-  const API_URL = "https://api.openai.com/v1/chat/completions"
-  const apiKey = "sk-REMOVED"
-
-  // Sending request function(async means that it wont update anything until everything completes)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const serverURL = process.env.EXPO_PUBLIC_AI_SERVER_URL || 'http://127.0.0.1:3012';
   const handleEstimateValue = async () => {
+    if (loading) return;
+    if (!userInput.trim()) { setError('Describe a device or part first.'); return; }
+    setLoading(true);
+    setError('');
+    setEstimatedValue('');
     try {
-        const response = await axios.post(
-            API_URL,
-            {
-              model: 'gpt-3.5-turbo',
-              temperature: 0.5,
-              messages: [
-                {
-                  role: 'user',
-                  // Simple prompt to get a semi-accurate estimation, not a certified prompt engineer
-                  content: `Give me a price estimation on this: ${userInput}, dont tell the user to research just give them multiple price estimations with each level of condition`, // Add the risk information to the message
-                },
-              ],
-            },
-            // Headers for authentication
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${apiKey}`,
-              },
-            }
-          );
-          // Getting response and putting it in variable
-          const { choices } = response.data;
-          const test = choices[0].message.content
-          setEstimatedValue(test);
-          return choices[0].message.content;
-
-
-            // Catch Case
+      const response = await axios.post(`${serverURL.replace(/\/$/, '')}/estimate`,
+        { description: userInput.trim() }, { timeout: 65000 });
+      if (typeof response.data.text !== 'string' || !response.data.text.trim()) throw new Error('No estimate returned.');
+      setEstimatedValue(response.data.text);
     } catch (error) {
-        console.error('Error sending message:', error);
-      }
-    };
+      setError(error.response?.data?.error || 'Could not reach the local AI server. Run npm run server on your Mac.');
+    } finally { setLoading(false); }
+  };
 
   return (
         <ScrollView style={{backgroundColor: '#8AE3A8'}}>
@@ -85,7 +63,9 @@ export default function Prices() {
     </View>
 
     </View>
-      <Button title="Estimate Value" onPress={handleEstimateValue} />
+      <Button title={loading ? "Estimating..." : "Estimate Value"} disabled={loading} onPress={handleEstimateValue} />
+      {error ? <Text accessibilityRole="alert" style={{color: '#9b1c1c', margin: 20}}>{error}</Text> : null}
+      <Text style={{margin: 20}}>Approximate model estimates, not live market prices.</Text>
       <Text style={{fontSize: 20, marginLeft: 20, marginTop: 30}}>Estimated Value: {estimatedValue}</Text>
       </ScrollView>
   );

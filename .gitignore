@@ -33,3 +33,15 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Claude Code
+.claude/
+
+# Env
+.env
+
+# Local configuration and server credentials
+.env*
+!.env.example
+server/.env*
+!server/.env.example

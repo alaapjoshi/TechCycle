@@ -1,23 +1,19 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc } from "firebase/firestore";
+import { getApp, getApps, initializeApp } from "firebase/app";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+// Firebase web configuration identifies the project; access is governed by Firebase rules.
+// Expo substitutes these explicit public variables into the app bundle.
 const firebaseConfig = {
-  apiKey: "AIzaSyAS_WyLglUHaJzoCdcD5ndYN3bDKFjuzvg",
-  authDomain: "techcycle-eefe8.firebaseapp.com",
-  projectId: "techcycle-eefe8",
-  storageBucket: "techcycle-eefe8.appspot.com",
-  messagingSenderId: "841371061773",
-  appId: "1:841371061773:web:0fc161db3fb12d974dcf44"
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
-export { app, db, doc, getDoc };
+const firebaseConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.storageBucket && firebaseConfig.appId);
+const app = firebaseConfigured ? (getApps().length ? getApp() : initializeApp(firebaseConfig)) : null;
+const db = app ? getFirestore(app) : null;
+const storage = app ? getStorage(app) : null;
+export { app, db, storage, firebaseConfigured, doc, getDoc };

@@ -8,7 +8,7 @@ import Animated, {interpolate, Extrapolate, useSharedValue, useAnimatedStyle} fr
 
 
 //Firebase/Firestore
-import { app, db } from '../../firebase'; // Adjust the path to match your project structure
+import { app, db, firebaseConfigured } from '../../firebase'; // Adjust the path to match your project structure
 import { collection, getDocs } from 'firebase/firestore'; // Import Firestore methods
 
 // Navigation
@@ -58,6 +58,7 @@ function CarouselItem() {
 
   //Hooks/ Variables
   const [searchText, setSearchText] = useState('');
+  const [loadError, setLoadError] = useState('');
   const [trendingData, setTrendingData] = useState([]);
   const [forYouData, setForYouData] = useState([]);
   const [storeData, setStoreData] = useState([]);
@@ -71,7 +72,7 @@ function CarouselItem() {
       navigation.navigate('ItemDetailsScreen', {
         title: item.title,
         imageUrl: item.imageURL,
-        desc: item.desc, 
+        desc: item.desc,
         date2: item.date,
         price: item.price,
         condition: item.condition
@@ -82,6 +83,7 @@ function CarouselItem() {
 
   // Fetch trending data from Firebase
   const [activeIndex, setActiveIndex] = useState(0);useEffect(() => {
+    if (!firebaseConfigured) { setLoadError('Run npm run setup to connect your Firebase project.'); return; }
     const fetchTrendingData = async () => {
 
       {/* Search for data collection called trending */}
@@ -89,10 +91,10 @@ function CarouselItem() {
       try {
          {/* Get all the data in the trending collection, map it and put it into a useState hook / variabel */}
         const trendingQuerySnapshot = await getDocs(trendingCollectionRef);
-        const trendingData = trendingQuerySnapshot.docs.map((doc) => doc.data());
+        const trendingData = trendingQuerySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         setTrendingData(trendingData);
       } catch (error) {
-        console.error('Error fetching trending data:', error);
+        setLoadError('Could not load listings. Check your Firebase configuration and rules.');
       }
     };
     // Fetch for you data from Firebase (fetch process is the same)
@@ -101,10 +103,10 @@ function CarouselItem() {
       const forYouCollectionRef = collection(db, 'foryou'); // Reference to the 'forYou' collection
       try {
         const forYouQuerySnapshot = await getDocs(forYouCollectionRef);
-        const forYouData = forYouQuerySnapshot.docs.map((doc) => doc.data());
+        const forYouData = forYouQuerySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         setForYouData(forYouData);
       } catch (error) {
-        console.error('Error fetching "For You" data:', error);
+        setLoadError('Could not load listings. Check your Firebase configuration and rules.');
       }
     };
     // Fetch similiar data from Firebase (fetch process is the same)
@@ -112,10 +114,10 @@ function CarouselItem() {
       const storeCollectionRef = collection(db, 'store'); // Reference to the 'forYou' collection
       try {
         const storeQuerySnapshot = await getDocs(storeCollectionRef);
-        const storeData = storeQuerySnapshot.docs.map((doc) => doc.data());
+        const storeData = storeQuerySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         setStoreData(storeData);
       } catch (error) {
-        console.error('Error fetching "For You" data:', error);
+        setLoadError('Could not load listings. Check your Firebase configuration and rules.');
       }
     };
     // Running all three functions
@@ -134,7 +136,7 @@ function CarouselItem() {
     <ScrollView>
     <SafeAreaView style={{ flex: 1, backgroundColor: '#8AE3A8' }}>
 
-    
+
     <View style={styles.iconContainer} >
     <View style={styles.container}>
       {/* Search Icon on the Left */}
@@ -146,7 +148,7 @@ function CarouselItem() {
       <TextInput
         style={styles.input}
         placeholder="Search..."
-        onChange={setSearchText}
+        onChangeText={setSearchText}
         placeholderTextColor="gray"
       />
     </View>
@@ -154,9 +156,9 @@ function CarouselItem() {
     {/* Welcome Text */}
 
     <Text style={{textAlign: 'center', fontSize: 30, fontFamily: "InterTight_400Regular"}}>
-        Welcome Back Alaap! 
+        Welcome to TechCycle!
       </Text>
-    
+
     {/* Cart Icon on the Right */}
     <TouchableOpacity style={styles.cartIconContainer}>
       <Ionicons name="cart-outline" size={24} color="gray" />
@@ -164,13 +166,14 @@ function CarouselItem() {
 
     </View>
 
-      {/* Trending TExt with custom font */}
+      {loadError ? <Text accessibilityRole="alert" style={{color: "#9b1c1c", margin: 16}}>{loadError}</Text> : null}
+    {/* Trending TExt with custom font */}
 
       <Text style={{fontSize: 24,margin: 16, fontFamily: 'InterTight_400Regular'}}>Trending</Text>
 
       {/* First of three carousels, parameters should be pretty self explanatory*/}
     <Animated.View>
-      <AnimatedFlatList 
+      <AnimatedFlatList
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0.8}
@@ -182,12 +185,12 @@ function CarouselItem() {
         horizontal={true}
         // This render item loops through the trendingData hook and shows all the data in the carousel
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigateToDetails(item)}> 
+          <TouchableOpacity onPress={() => navigateToDetails(item)}>
           <View style={styles.carouselItem}>
             <Image source={{ uri: item.imageURL }} style={styles.carouselImage} />
             <Text style={styles.carouselText}>{item.title}</Text>
           </View>
-        </TouchableOpacity>          
+        </TouchableOpacity>
           )}
 
         keyExtractor={(item) => item.id}
@@ -200,7 +203,7 @@ function CarouselItem() {
 
       <Text style={{fontSize: 24,margin: 16, fontFamily: 'InterTight_400Regular'}}>For You</Text>
       <Animated.View>
-      <AnimatedFlatList 
+      <AnimatedFlatList
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0.8}
@@ -211,12 +214,12 @@ function CarouselItem() {
         data={forYouData}
         horizontal={true}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigateToDetails(item)}> 
+          <TouchableOpacity onPress={() => navigateToDetails(item)}>
           <View style={styles.carouselItem}>
             <Image source={{ uri: item.imageURL }} style={styles.carouselImage} />
             <Text style={styles.carouselText}>{item.title}</Text>
           </View>
-        </TouchableOpacity>          
+        </TouchableOpacity>
           )}
         //@ts-ignore
         keyExtractor={(item) => item.id}
@@ -228,7 +231,7 @@ function CarouselItem() {
 
     <Text style={{fontSize: 24,margin: 16, fontFamily: 'InterTight_400Regular'}}>Similiar to Recently Searched</Text>
       <Animated.View>
-      <AnimatedFlatList 
+      <AnimatedFlatList
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0.8}
@@ -239,13 +242,13 @@ function CarouselItem() {
         data={storeData}
         horizontal={true}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigateToDetails(item)}> 
+          <TouchableOpacity onPress={() => navigateToDetails(item)}>
                 <View style={styles.carouselItem}>
                   <Image source={{ uri: item.imageURL }} style={styles.carouselImage} />
                   <Text style={styles.carouselText}>{item.title}</Text>
                 </View>
-              </TouchableOpacity>  
-     
+              </TouchableOpacity>
+
           )}
         keyExtractor={(item) => item.id}
 

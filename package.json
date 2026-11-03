@@ -6,7 +6,10 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "setup": "node scripts/setup.mjs",
+    "server": "node --env-file=server/.env server/index.mjs",
+    "test": "node --test server/index.test.mjs pages/upload/listing.test.mjs"
   },
   "dependencies": {
     "@expo-google-fonts/dev": "^0.2.3",
@@ -44,5 +47,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">=20.12.0"
+  }
 }

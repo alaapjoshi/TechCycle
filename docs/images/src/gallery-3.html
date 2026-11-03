@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><title>gallery-3</title><link rel="stylesheet" href="style.css"></head><body>
+<div class="gallery">
+  <div class="copy">
+    <div class="eyebrow">Upload flow</div>
+    <h1>One photo, one listing</h1>
+    <p>The submit handler uploads the photo first and only writes the listing once Storage returns a download URL. A failed upload never creates a listing.</p>
+  </div>
+  <div class="steps">
+    <div class="step card"><div class="num">1</div><div><h2>Pick a photo</h2><p class="muted">Expo Image Picker keeps the selection on the device until the seller taps Add Item.</p></div></div>
+    <div class="step card"><div class="num">2</div><div><h2>Upload to Firebase Storage</h2><p class="muted">The image is stored under Pictures/ and the app waits for its download URL.</p></div></div>
+    <div class="step card"><div class="num">3</div><div><h2>Write the Firestore listing</h2><p class="muted">Title, notes, price, condition, and the image URL are saved to the foryou collection.</p></div></div>
+  </div>
+</div>
+<div class="byline">Alaap Joshi · TechCycle · Diagram of pages/upload/listing.mjs</div></body></html>

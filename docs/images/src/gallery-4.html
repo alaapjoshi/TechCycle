@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><title>gallery-4</title><link rel="stylesheet" href="style.css"><style>
+.diagram{position:relative;width:760px;height:700px}
+.node{position:absolute;padding:26px 28px;width:300px}
+.node h2{font-size:26px;font-weight:700;margin-bottom:8px}
+.node p{font-size:18px;line-height:1.4}
+.node.app{left:0;top:255px;border:2px solid var(--accent)}
+.node.fs{right:0;top:0}
+.node.srv{right:0;top:255px}
+.node.ai{right:0;top:510px}
+svg{position:absolute;inset:0}
+.tag{position:absolute;font-size:16px;color:var(--accent);font-weight:600}
+</style></head><body>
+<div class="gallery">
+  <div class="copy">
+    <div class="eyebrow">Architecture</div>
+    <h1>The OpenAI key stays on the server</h1>
+    <p>Listings and photos live in Firebase. Price requests go to a local Node.js server, which is the only place the OpenAI API key is stored.</p>
+  </div>
+  <div class="diagram">
+    <svg width="760" height="700" viewBox="0 0 760 700"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#38BDF8"/></marker></defs>
+      <path d="M150 253 L 150 80 L 452 80" stroke="#38BDF8" stroke-width="3" fill="none" marker-end="url(#a)"/>
+      <path d="M300 340 L 452 340" stroke="#38BDF8" stroke-width="3" fill="none" marker-end="url(#a)"/>
+      <path d="M610 418 L 610 506" stroke="#38BDF8" stroke-width="3" fill="none" marker-end="url(#a)"/>
+    </svg>
+    <div class="node card app"><h2>Expo app</h2><p class="muted">React Native screens: home carousels, upload form, price tab, map.</p></div>
+    <div class="node card fs"><h2>Firebase</h2><p class="muted">Firestore listings and Storage photos, read and written by the app.</p></div>
+    <div class="node card srv"><h2>Local Node.js server</h2><p class="muted">Validates the description and holds OPENAI_API_KEY.</p></div>
+    <div class="node card ai"><h2>OpenAI Responses API</h2><p class="muted">Returns estimate text to the server, which passes it to the app.</p></div>
+    <div class="tag" style="left:178px;top:46px">listings + photos</div>
+    <div class="tag" style="left:318px;top:352px">item description</div>
+    <div class="tag" style="left:626px;top:452px">server-side key</div>
+  </div>
+</div>
+<div class="byline">Alaap Joshi · TechCycle · Architecture diagram</div></body></html>

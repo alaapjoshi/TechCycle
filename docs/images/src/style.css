@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #0F172A;
+  --card: #1E293B;
+  --text: #F8FAFC;
+  --muted: #94A3B8;
+  --accent: #38BDF8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.muted { color: var(--muted); }
+.accent { color: var(--accent); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.chip {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.10);
+  border: 2px solid rgba(56, 189, 248, 0.45);
+  border-radius: 999px;
+  padding: 8px 18px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.40);
+}
+
+.phone {
+  flex: none;
+  background: var(--card);
+  border-radius: 36px;
+  padding: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+.phone img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.byline {
+  position: absolute;
+  left: 64px;
+  bottom: 44px;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* Gallery: copy column on the left, visual on the right */
+.gallery {
+  width: 1600px;
+  height: 1000px;
+  padding: 64px 96px;
+  display: flex;
+  align-items: center;
+  gap: 88px;
+}
+.gallery .copy { flex: 1; }
+.gallery .eyebrow {
+  font-size: 18px; font-weight: 700; color: var(--accent);
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px;
+}
+.gallery h1 { font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.5px; }
+.gallery p { font-size: 26px; line-height: 1.5; color: var(--muted); }
+.gallery ul { list-style: none; margin-top: 36px; display: grid; gap: 16px; }
+.gallery li { font-size: 22px; color: var(--text); padding-left: 28px; position: relative; line-height: 1.4; }
+.gallery li::before {
+  content: ''; position: absolute; left: 0; top: 11px;
+  width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+}
+.gallery .phone { width: 404px; height: 862px; }
+
+/* Step and flow diagrams */
+.steps { display: grid; gap: 22px; width: 720px; }
+.step { display: flex; gap: 24px; align-items: center; padding: 28px 32px; }
+.step .num {
+  flex: none; width: 56px; height: 56px; border-radius: 50%;
+  border: 3px solid var(--accent); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 700;
+}
+.step h2 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+.step p { font-size: 20px; line-height: 1.4; }
+.arrow { height: 0; }

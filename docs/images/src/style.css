@@ -50,14 +50,14 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 26px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: top;
 }
 
 .byline {
   position: absolute;
   left: 64px;
-  bottom: 44px;
+  bottom: 64px;
   font-size: 18px;
   color: var(--muted);
 }
@@ -98,3 +98,7 @@ body {
 .step h2 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
 .step p { font-size: 20px; line-height: 1.4; }
 .arrow { height: 0; }
+
+/* Frames taken from the demo video already have rounded screen corners */
+.phone.demo { border-radius: 56px; }
+.phone.demo img { border-radius: 44px; }

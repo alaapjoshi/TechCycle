@@ -8,12 +8,12 @@
 
 ## About
 
-Replacement parts can be expensive or difficult to find, even when an older device still has useful components. TechCycle gives those parts a second life: users can browse electronics listings, upload parts for sale, and request estimated resale prices. React Native handles the interface, Firebase stores listings and photos, and a Node.js service handles AI price estimates. The project won the **Solo Prize** at **PeddieHacks 2023** ([Devpost](https://devpost.com/software/techcycle)).
+Built solo at **PeddieHacks 2023**, with a project update dated **August 19, 2023**. TechCycle helps people reuse electronics by browsing spare parts, creating listings, and requesting resale price estimates. React Native provides the mobile interface, Firebase stores listings and photos, and a local Node.js service handles price requests. It won **Solo Prize (USA Address only)**; [Devpost](https://devpost.com/software/techcycle) lists Alaap Joshi as its sole creator. TODO(Alaap): confirm the hackathon date range.
 
 ## Features
 
-- Browses Firestore listings in Trending, For You, and related-item carousels, with item detail screens.
-- Uploads a selected photo once, waits for its download URL, and saves that URL with the listing's title, notes, condition, and price.
+- Shows Firestore listings in Trending, For You, and related-item carousels, with item detail screens.
+- Creates listings with a photo, title, notes, condition, and price, saving the photo URL after upload.
 - Estimates approximate device or part prices through a local OpenAI proxy, with loading and error feedback.
 - Displays a map with fixed repair-shop markers in the Cupertino area.
 
@@ -21,14 +21,20 @@ Replacement parts can be expensive or difficult to find, even when an older devi
 
 <table>
   <tr>
-    <td width="50%"><img src="docs/images/gallery-1.png" alt="Upload screen filled in for an iPhone 11 battery listing with title, condition, notes, and price" /><br /><sub>Listing form for a spare part: title, condition, notes, price, and photo</sub></td>
-    <td width="50%"><img src="docs/images/gallery-2.png" alt="Price estimate screen with a Galaxy S10 cracked screen description entered" /><br /><sub>Price tab: describe a device or part and request an estimate</sub></td>
+    <td width="50%"><img src="docs/images/gallery-1.png" alt="Home feed with electronics parts in Trending and For You carousels" /><br /><sub>Browse spare parts in the original demo</sub></td>
+    <td width="50%"><img src="docs/images/gallery-2.png" alt="Item detail screen showing a camera module, condition, notes, and price" /><br /><sub>Inspect a listing; checkout is a placeholder</sub></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/images/gallery-3.png" alt="Three-step diagram: pick a photo, upload it to Firebase Storage, then write the Firestore listing with its URL" /><br /><sub>Upload sequence: the listing is written only after the photo URL exists</sub></td>
-    <td width="50%"><img src="docs/images/gallery-4.png" alt="Architecture diagram: the Expo app talks to Firebase and to a local Node.js server, which alone calls the OpenAI API" /><br /><sub>Architecture: the OpenAI key stays on the local server</sub></td>
+    <td width="50%"><img src="docs/images/gallery-3.png" alt="Price screen displaying estimated ranges for an iPhone 11 battery" /><br /><sub>Request resale price estimates</sub></td>
+    <td width="50%"><img src="docs/images/gallery-4.png" alt="Native map showing the Apple Park repair marker" /><br /><sub>Explore fixed sample repair locations</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/images/gallery-5.png" alt="Listing form with title, condition, notes, price, and photo" /><br /><sub>Create a spare-part listing</sub></td>
+    <td width="50%"><img src="docs/images/gallery-6.png" alt="Diagram connecting the app to Firebase and a local price service" /><br /><sub>Current architecture: credentials stay on the server</sub></td>
   </tr>
 </table>
+
+The first four images are frames from the [original Devpost demo](https://www.youtube.com/watch?v=VKVpra67uo4), recorded in 2023; the current interface and price service differ. The upload image is an existing local capture. TODO(Alaap): confirm its capture environment and date. Sources and regeneration instructions are in [the image notes](docs/images/README.md).
 
 ## Tech Stack
 

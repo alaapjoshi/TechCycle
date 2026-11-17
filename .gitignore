@@ -34,7 +34,7 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# Claude Code
+# Local tooling
 .claude/
 
 # Env
@@ -45,3 +45,11 @@ yarn-error.*
 !.env.example
 server/.env*
 !server/.env.example
+
+# Editor and generated native build files
+.vscode/
+.idea/
+coverage/
+build/
+__pycache__/
+*.pyc

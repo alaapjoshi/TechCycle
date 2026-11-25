@@ -8,7 +8,7 @@
 
 ## About
 
-Built solo at **PeddieHacks 2023**, with a project update dated **August 19, 2023**. TechCycle helps people reuse electronics by browsing spare parts, creating listings, and requesting resale price estimates. React Native provides the mobile interface, Firebase stores listings and photos, and a local Node.js service handles price requests. It won **Solo Prize (USA Address only)**; [Devpost](https://devpost.com/software/techcycle) lists Alaap Joshi as its sole creator. TODO(Alaap): confirm the hackathon date range.
+Built solo at **PeddieHacks 2023**, with a project update dated **August 19, 2023**. TechCycle helps people reuse electronics by browsing spare parts, creating listings, and requesting resale price estimates. React Native provides the mobile interface, Firebase stores listings and photos, and a local Node.js service handles price requests. It won **Solo Prize (USA Address only)**; [Devpost](https://devpost.com/software/techcycle) lists Alaap Joshi as its sole creator.
 
 ## Features
 
@@ -34,7 +34,7 @@ Built solo at **PeddieHacks 2023**, with a project update dated **August 19, 202
   </tr>
 </table>
 
-The first four images are frames from the [original Devpost demo](https://www.youtube.com/watch?v=VKVpra67uo4), recorded in 2023; the current interface and price service differ. The upload image is an existing local capture. TODO(Alaap): confirm its capture environment and date. Sources and regeneration instructions are in [the image notes](docs/images/README.md).
+The first four images are frames from the [original Devpost demo](https://www.youtube.com/watch?v=VKVpra67uo4), recorded in 2023; the current interface and price service differ. The upload image is an existing local capture. Sources and regeneration instructions are in [the image notes](docs/images/README.md).
 
 ## Tech Stack
 
@@ -50,7 +50,7 @@ The first four images are frames from the [original Devpost demo](https://www.yo
 
 ### Prerequisites
 
-- Node.js 20.12 or newer (the `server` script uses `--env-file`). The app targets Expo SDK 49, so use an iOS Simulator or Android setup that supports SDK 49 development builds. TODO(Alaap): confirm the simulator/Expo Go version you run it with.
+- Node.js 20.12 or newer (the `server` script uses `--env-file`). The app targets Expo SDK 49, so use an iOS Simulator or Android setup that supports SDK 49 development builds.
 - Xcode and an iOS Simulator on macOS, or a compatible Android development environment.
 - A Firebase project with Firestore and Storage enabled and rules suitable for your own development data.
 - Optional: an OpenAI API key with billing and access to the configured model, for price estimates.
